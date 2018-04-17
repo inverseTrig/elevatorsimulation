@@ -1,1 +1,2 @@
-"# Elevator Simulator for HCI" 
+# Elevator Simulator for HCI
+Author: HeeChan Kang & Yusuf Azam
