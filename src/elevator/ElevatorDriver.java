@@ -51,10 +51,8 @@ public class ElevatorDriver {
 
         // Setup riders homed for each floor
         for (int i = 1; i < building.length; i++) {
-            System.out.println("Current floor: " + (i + 1) + ". Adding: " + ridersHomed[i] + " people.");
             addRiders(ridersHomed[i], i + 1, riders);
         }
-        System.out.println("Total riders: " + riders.size());
 
         Collections.shuffle(riders);
 
@@ -161,8 +159,7 @@ public class ElevatorDriver {
 
             //Frustrate
             elevator.frustrate(frustrationFactor, fT); // Need to change to user input
-            System.out.println(elevator.getCurrentFloor());
-            while (elevator.getCurrentFloor() != 1 && !elevator.isFull() && elevator.getCurrentFloor() -1 < numberOfFloors && !building[elevator.getCurrentFloor() - 1].isEmpty()) {
+            while (elevator.getCurrentFloor() != 1 && !elevator.isFull() && !building[elevator.getCurrentFloor() - 1].isEmpty()) {
                 elevator.push(building[elevator.getCurrentFloor() - 1].remove());
             }
             //Move elevator
@@ -170,12 +167,12 @@ public class ElevatorDriver {
             if (elevator.peek() != null)
                 elevator.setCurrentFloor(elevator.peek().getHomeFloor());
             else
-                elevator.setCurrentFloor(gen.nextInt(4) + 2);
+                elevator.setCurrentFloor(gen.nextInt(numberOfFloors-1) + 2);
 
 //            System.out.println("ELEVATOR AT END: " + elevator);
             simulationPM.add(elevator);
         }
-        while (currentRider < riders.size() || elevator.peek() != null || building[1].peek() != null || building[2].peek() != null || building[3].peek() != null || building[4].peek() != null);
+        while (currentRider < riders.size() || elevator.peek() != null || buildingPeekFloors(building));
 
         //Output
         result = 0;
@@ -199,6 +196,16 @@ public class ElevatorDriver {
     public static void addRiders(int quantity, int floor, ArrayList<ElevatorRider> list) {
         for (int i = 0; i < quantity; i++)
             list.add(new ElevatorRider(floor));
+    }
+
+    public static boolean buildingPeekFloors(PriorityQueue<ElevatorRider>[] building) {
+        boolean isOccupied = false;
+        for (int i = 1; i < building.length; i++) {
+            if (building[i].peek() != null) {
+                isOccupied = true;
+            }
+        }
+        return isOccupied;
     }
 
 }

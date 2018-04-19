@@ -328,7 +328,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         fT = FrustrationTypes.LINEAR;
         percentageVip = 10; // n%
         numberOfFloors = 3;
-        numberOfRidersToAdd = 10;
+        numberOfRidersToAdd = 5;
         ridersHomed = new int[3];
 
         ridersHomed[0] = 0;
