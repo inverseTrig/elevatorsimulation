@@ -4,6 +4,7 @@ import elevator.*;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -38,9 +40,11 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     Button reduceRidersToAdd, increaseRidersToAdd;
     Button reduceVip, increaseVip;
 
-    TextField textNumberOfFloors, textRidersToAdd, textVip;
-    TextField fromNumberOfFloors, toNumberOfFloors, fromRidersToAdd, toRidersToAdd, fromVip, toVip;
-    CheckBox numberOfFloorsCheckBox, ridersToAddCheckBox, vipCheckBox;
+    ChoiceBox frustrationStyle;
+
+    static TextField textNumberOfFloors, textRidersToAdd, textVip, textFrustration;
+    static TextField fromNumberOfFloors, toNumberOfFloors, fromRidersToAdd, toRidersToAdd, fromVip, toVip, fromHomed, toHomed;
+    static CheckBox numberOfFloorsCheckBox, ridersToAddCheckBox, vipCheckBox, ridersHomedCheckBox;
 
     static Image imageLeft, imageRight;
 
@@ -52,6 +56,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     final Text range = new Text(" ~ ");
     final Text rangeRiders = new Text(" ~ ");
     final Text rangeVip = new Text(" ~ ");
+    final Text rangeHomed = new Text(" ~ ");
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -64,6 +69,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         rangeRiders.setTextAlignment(TextAlignment.CENTER);
         rangeVip.setWrappingWidth(36);
         rangeVip.setTextAlignment(TextAlignment.CENTER);
+        rangeHomed.setWrappingWidth(36);
+        rangeHomed.setTextAlignment(TextAlignment.CENTER);
 
         tooltip.setFont(Font.font("Knockout", 8));
         tooltip.setWrappingWidth(144);
@@ -121,10 +128,20 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         numberOfFloorsCheckBox = new CheckBox();
 
         reduceNumberOfFloors = new Button("", imageViewLeft);
-        textNumberOfFloors = new TextField();
+        reduceNumberOfFloors.setOnAction(e -> {
+            int temp = Integer.parseInt(textNumberOfFloors.getText());
+            if (temp > 1) {
+                textNumberOfFloors.setText(Integer.toString(temp-1));
+            }
+        });
+        textNumberOfFloors = new TextField("5");
         textNumberOfFloors.setAlignment(Pos.CENTER);
         textNumberOfFloors.setMaxWidth(72);
         increaseNumberOfFloors = new Button("", imageViewRight);
+        increaseNumberOfFloors.setOnAction(e -> {
+            int temp = Integer.parseInt(textNumberOfFloors.getText());
+            textNumberOfFloors.setText(Integer.toString(temp+1));
+        });
 
         textNumberOfFloors.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -136,8 +153,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             }
         });
 
-        fromNumberOfFloors = new TextField();
-        toNumberOfFloors = new TextField();
+        fromNumberOfFloors = new TextField("3");
+        toNumberOfFloors = new TextField("10");
         fromNumberOfFloors.setAlignment(Pos.CENTER);
         toNumberOfFloors.setAlignment(Pos.CENTER);
         fromNumberOfFloors.setMaxWidth(54);
@@ -189,10 +206,20 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         imageViewRightRiders.setFitHeight(heightFit); imageViewRightRiders.setFitWidth(widthFit);
 
         reduceRidersToAdd = new Button("", imageViewLeftRiders);
-        textRidersToAdd = new TextField();
+        reduceRidersToAdd.setOnAction(e -> {
+            int temp = Integer.parseInt(textRidersToAdd.getText());
+            if (temp > 1) {
+                textRidersToAdd.setText(Integer.toString(temp-1));
+            }
+        });
+        textRidersToAdd = new TextField("10");
         textRidersToAdd.setAlignment(Pos.CENTER);
         textRidersToAdd.setMaxWidth(72);
         increaseRidersToAdd = new Button("", imageViewRightRiders);
+        increaseRidersToAdd.setOnAction(e -> {
+            int temp = Integer.parseInt(textRidersToAdd.getText());
+            textRidersToAdd.setText(Integer.toString(temp+1));
+        });
 
         textRidersToAdd.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -204,8 +231,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             }
         });
 
-        fromRidersToAdd = new TextField();
-        toRidersToAdd = new TextField();
+        fromRidersToAdd = new TextField("5");
+        toRidersToAdd = new TextField("15");
         fromRidersToAdd.setAlignment(Pos.CENTER);
         toRidersToAdd.setAlignment(Pos.CENTER);
         fromRidersToAdd.setMaxWidth(54);
@@ -256,10 +283,22 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         imageViewRightVip.setFitHeight(heightFit); imageViewRightVip.setFitWidth(widthFit);
 
         reduceVip = new Button("", imageViewLeftVip);
-        textVip = new TextField();
+        reduceVip.setOnAction(e -> {
+            int temp = Integer.parseInt(textVip.getText());
+            if (temp > 0) {
+                textVip.setText(Integer.toString(temp-1));
+            }
+        });
+        textVip = new TextField("10");
         textVip.setAlignment(Pos.CENTER);
         textVip.setMaxWidth(72);
         increaseVip = new Button("", imageViewRightVip);
+        increaseVip.setOnAction(e -> {
+            int temp = Integer.parseInt(textVip.getText());
+            if (temp < 100) {
+                textVip.setText(Integer.toString(temp+1));
+            }
+        });
 
         textVip.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -271,8 +310,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             }
         });
 
-        fromVip = new TextField();
-        toVip = new TextField();
+        fromVip = new TextField("7");
+        toVip = new TextField("13");
         fromVip.setAlignment(Pos.CENTER);
         toVip.setAlignment(Pos.CENTER);
         fromVip.setMaxWidth(54);
@@ -308,12 +347,54 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
 
         /**************************************************************
+         FRUSTRATION BOX
+         **************************************************************/
+        Text frustrationLabel = new Text ("Frustration Type");
+        frustrationLabel.setFont(Font.font("Knockout", FontWeight.BOLD, 12));
+        frustrationLabel.setWrappingWidth(126);
+        frustrationStyle = new ChoiceBox(FXCollections.observableArrayList("Linear",
+                "Logarithmic", "Polynomial", "Exponential", "Factorial"));
+        frustrationStyle.getSelectionModel().select(0);
+        textFrustration = new TextField("1");
+        textFrustration.setMaxWidth(36);
+
+        HBox frustrationDisplay = new HBox(frustrationStyle, textFrustration);
+        VBox frustrationBox = new VBox(frustrationLabel, frustrationDisplay);
+
+
+        /**************************************************************
+         RIDERS HOMED BUTTON
+         **************************************************************/
+        Text ridersHomedLabel = new Text ("Riders Homed");
+        ridersHomedLabel.setFont(Font.font("Knockout", FontWeight.BOLD, 12));
+        ridersHomedLabel.setWrappingWidth(126);
+        ridersHomedCheckBox = new CheckBox();
+
+        fromHomed = new TextField("75");
+        toHomed = new TextField("125");
+        fromHomed.setAlignment(Pos.CENTER);
+        toHomed.setAlignment(Pos.CENTER);
+        fromHomed.setMaxWidth(54);
+        toHomed.setMaxWidth(54);
+
+        HBox homedItem = new HBox();
+        homedItem.getChildren().addAll(ridersHomedLabel, ridersHomedCheckBox);
+        HBox homedRandomize = new HBox();
+        homedRandomize.getChildren().addAll(fromHomed, rangeHomed, toHomed);
+        VBox ridersHomedBox = new VBox(homedItem, homedRandomize);
+
+
+
+        /**************************************************************
         COMBINE ALL THE BOXES
          **************************************************************/
         VBox toolBar = new VBox();
-        toolBar.getChildren().addAll(toolBox, separator, tooltip, floorsBox, ridersBox, vipBox);
+        toolBar.getChildren().addAll(toolBox, separator, tooltip, floorsBox, ridersBox, vipBox, frustrationBox);
 
-        Scene scene = new Scene(toolBar);
+        HBox heechansPart = new HBox();
+        heechansPart.getChildren().addAll(toolBar, ridersHomedBox);
+
+        Scene scene = new Scene(heechansPart);
 
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -327,15 +408,15 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         frustrationFactor = 1;
         fT = FrustrationTypes.LINEAR;
         percentageVip = 10; // n%
-        numberOfFloors = 3;
-        numberOfRidersToAdd = 5;
-        ridersHomed = new int[3];
+        numberOfFloors = 5;
+        numberOfRidersToAdd = 10;
+        ridersHomed = new int[5];
 
         ridersHomed[0] = 0;
         ridersHomed[1] = 100;
         ridersHomed[2] = 65;
-        //ridersHomed[3] = 75;
-        //ridersHomed[4] = 90;
+        ridersHomed[3] = 75;
+        ridersHomed[4] = 90;
 
         launch(args);
     }
@@ -351,6 +432,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             } else {
                 numberOfFloors = Integer.parseInt(textNumberOfFloors.getText());
             }
+
+            ridersHomed = new int[numberOfFloors];
 
             if (ridersToAddCheckBox.isSelected()) {
                 int lowerRiders = Integer.parseInt(fromRidersToAdd.getText());
@@ -368,6 +451,37 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                 percentageVip = Integer.parseInt(textVip.getText());
             }
 
+            if (ridersHomedCheckBox.isSelected()) {
+                int lowerHomed = Integer.parseInt(fromHomed.getText());
+                int UpperHomed = Integer.parseInt(toHomed.getText());
+                for (int i = 1; i < numberOfFloors; i++) {
+                 ridersHomed[i] = ThreadLocalRandom.current().nextInt(lowerHomed, UpperHomed + 1);
+                }
+            } else {
+                // NOT YET IMPLEMENTED
+            }
+
+            //LINEAR, LOGARITHMIC, POLYNOMIAL, EXPONENTIAL, FACTORIAL
+            switch (frustrationStyle.getValue().toString()) {
+                case "Linear":
+                    fT = FrustrationTypes.LINEAR;
+                    break;
+                case "Logarithmic":
+                    fT = FrustrationTypes.LOGARITHMIC;
+                    break;
+                case "Polynomial":
+                    fT = FrustrationTypes.POLYNOMIAL;
+                    break;
+                case "Exponential":
+                    fT = FrustrationTypes.EXPONENTIAL;
+                    break;
+                case "Factorial":
+                    fT = FrustrationTypes.FACTORIAL;
+                default:
+                    fT = FrustrationTypes.LINEAR;
+                    break;
+            }
+            System.out.println(ridersHomed[1] + " " + ridersHomed[2]);
             System.out.println("Double check: #Riders - " + numberOfRidersToAdd + ". #Floors - " + numberOfFloors + ". %Vip - " + percentageVip);
             elevatorDriver.Simulate(numberOfFloors, numberOfRidersToAdd, frustrationFactor, fT, percentageVip, ridersHomed);
 //            System.out.println(elevatorDriver.getSimulationAM().get(2));
