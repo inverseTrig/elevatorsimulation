@@ -1,10 +1,4 @@
-/bin/*
-
-/out/*
-
 .idea
 
 *.iml
-
-*.docx#
 
