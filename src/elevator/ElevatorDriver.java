@@ -79,7 +79,9 @@ public class ElevatorDriver {
             if (currentRider < riders.size()) {
                 //n new riders
                 for (int index = 0; index < numberOfRidersToAdd; index++) {
-                    building[0].add(riders.get(currentRider++));
+                    if (currentRider < riders.size()) {
+                        building[0].add(riders.get(currentRider++));
+                    }
                 }
             }
 
@@ -142,9 +144,11 @@ public class ElevatorDriver {
             if (currentRider < riders.size()) {
                 //10 new riders
                 for (int index = 0; index < numberOfRidersToAdd; index++) {
-                    building[riders.get(currentRider).getHomeFloor() - 1].add(riders.get(currentRider));
-                    riders.get(currentRider).setHomeFloor(1);
-                    currentRider++;
+                    if (currentRider < riders.size()) {
+                        building[riders.get(currentRider).getHomeFloor() - 1].add(riders.get(currentRider));
+                        riders.get(currentRider).setHomeFloor(1);
+                        currentRider++;
+                    }
                 }
             }
 
@@ -155,22 +159,20 @@ public class ElevatorDriver {
 
             //Frustrate
             elevator.frustrate(frustrationFactor, fT); // Need to change to user input
-
-            //Push riders from current floor to elevator
-            while (elevator.getCurrentFloor() != 1 && !elevator.isFull() && !building[elevator.getCurrentFloor() - 1].isEmpty())
+            while (elevator.getCurrentFloor() != 1 && !elevator.isFull() && !building[elevator.getCurrentFloor() - 1].isEmpty()) {
                 elevator.push(building[elevator.getCurrentFloor() - 1].remove());
-
+            }
             //Move elevator
             Random gen = new Random();
             if (elevator.peek() != null)
                 elevator.setCurrentFloor(elevator.peek().getHomeFloor());
             else
-                elevator.setCurrentFloor(gen.nextInt(4) + 2);
+                elevator.setCurrentFloor(gen.nextInt(numberOfFloors-1) + 2);
 
 //            System.out.println("ELEVATOR AT END: " + elevator);
             simulationPM.add(elevator);
         }
-        while (currentRider < riders.size() || elevator.peek() != null || building[1].peek() != null || building[2].peek() != null || building[3].peek() != null || building[4].peek() != null);
+        while (currentRider < riders.size() || elevator.peek() != null || buildingPeekFloors(building));
 
         //Output
         result = 0;
@@ -194,6 +196,16 @@ public class ElevatorDriver {
     public static void addRiders(int quantity, int floor, ArrayList<ElevatorRider> list) {
         for (int i = 0; i < quantity; i++)
             list.add(new ElevatorRider(floor));
+    }
+
+    public static boolean buildingPeekFloors(PriorityQueue<ElevatorRider>[] building) {
+        boolean isOccupied = false;
+        for (int i = 1; i < building.length; i++) {
+            if (building[i].peek() != null) {
+                isOccupied = true;
+            }
+        }
+        return isOccupied;
     }
 
 }

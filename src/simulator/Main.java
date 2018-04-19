@@ -2,6 +2,8 @@ package simulator;
 
 import elevator.*;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +21,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Main extends Application implements EventHandler<ActionEvent> {
 
     static int frustrationFactor, percentageVip, numberOfFloors, numberOfRidersToAdd;
@@ -33,6 +37,10 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     Button reduceNumberOfFloors, increaseNumberOfFloors;
     Button reduceRidersToAdd, increaseRidersToAdd;
     Button reduceVip, increaseVip;
+
+    TextField textNumberOfFloors, textRidersToAdd, textVip;
+    TextField fromNumberOfFloors, toNumberOfFloors, fromRidersToAdd, toRidersToAdd, fromVip, toVip;
+    CheckBox numberOfFloorsCheckBox, ridersToAddCheckBox, vipCheckBox;
 
     static Image imageLeft, imageRight;
 
@@ -110,21 +118,54 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         Text numberOfFloorsLabel = new Text ("Number of Floors");
         numberOfFloorsLabel.setFont(Font.font("Knockout", FontWeight.BOLD, 12));
         numberOfFloorsLabel.setWrappingWidth(126);
-        CheckBox numberOfFloorsRandomize = new CheckBox();
+        numberOfFloorsCheckBox = new CheckBox();
 
         reduceNumberOfFloors = new Button("", imageViewLeft);
-        TextField textNumberOfFloors = new TextField();
+        textNumberOfFloors = new TextField();
         textNumberOfFloors.setAlignment(Pos.CENTER);
         textNumberOfFloors.setMaxWidth(72);
         increaseNumberOfFloors = new Button("", imageViewRight);
 
-        TextField fromNumberOfFloors = new TextField();
-        TextField toNumberOfFloors = new TextField();
+        textNumberOfFloors.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    textNumberOfFloors.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+
+        fromNumberOfFloors = new TextField();
+        toNumberOfFloors = new TextField();
+        fromNumberOfFloors.setAlignment(Pos.CENTER);
+        toNumberOfFloors.setAlignment(Pos.CENTER);
         fromNumberOfFloors.setMaxWidth(54);
         toNumberOfFloors.setMaxWidth(54);
 
+        fromNumberOfFloors.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    fromNumberOfFloors.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+
+        toNumberOfFloors.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    toNumberOfFloors.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+
+
         HBox floorsItem = new HBox();
-        floorsItem.getChildren().addAll(numberOfFloorsLabel, numberOfFloorsRandomize);
+        floorsItem.getChildren().addAll(numberOfFloorsLabel, numberOfFloorsCheckBox);
         HBox floorsDisplay = new HBox();
         floorsDisplay.getChildren().addAll(reduceNumberOfFloors, textNumberOfFloors, increaseNumberOfFloors);
         HBox floorsRandomize = new HBox();
@@ -138,7 +179,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         Text ridersToAddLabel = new Text("Riders to Add");
         ridersToAddLabel.setFont(Font.font("Knockout", FontWeight.BOLD, 12));
         ridersToAddLabel.setWrappingWidth(126);
-        CheckBox ridersToAddCheckBox = new CheckBox();
+        ridersToAddCheckBox = new CheckBox();
 
         ImageView imageViewLeftRiders = new ImageView(imageLeft);
         imageViewLeftRiders.setImage(imageViewLeft.getImage());
@@ -148,15 +189,47 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         imageViewRightRiders.setFitHeight(heightFit); imageViewRightRiders.setFitWidth(widthFit);
 
         reduceRidersToAdd = new Button("", imageViewLeftRiders);
-        TextField textRidersToAdd = new TextField();
+        textRidersToAdd = new TextField();
         textRidersToAdd.setAlignment(Pos.CENTER);
         textRidersToAdd.setMaxWidth(72);
         increaseRidersToAdd = new Button("", imageViewRightRiders);
 
-        TextField fromRidersToAdd = new TextField();
-        TextField toRidersToAdd = new TextField();
+        textRidersToAdd.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    textRidersToAdd.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+
+        fromRidersToAdd = new TextField();
+        toRidersToAdd = new TextField();
+        fromRidersToAdd.setAlignment(Pos.CENTER);
+        toRidersToAdd.setAlignment(Pos.CENTER);
         fromRidersToAdd.setMaxWidth(54);
         toRidersToAdd.setMaxWidth(54);
+
+        fromRidersToAdd.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    fromRidersToAdd.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+
+        toRidersToAdd.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    toRidersToAdd.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
 
         HBox ridersItem = new HBox();
         ridersItem.getChildren().addAll(ridersToAddLabel, ridersToAddCheckBox);
@@ -173,7 +246,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         Text vipToAddLabel = new Text("VIP Percentage");
         vipToAddLabel.setFont(Font.font("Knockout", FontWeight.BOLD, 12));
         vipToAddLabel.setWrappingWidth(126);
-        CheckBox vipCheckBox = new CheckBox();
+        vipCheckBox = new CheckBox();
 
         ImageView imageViewLeftVip = new ImageView(imageLeft);
         imageViewLeftVip.setImage(imageViewLeft.getImage());
@@ -183,15 +256,47 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         imageViewRightVip.setFitHeight(heightFit); imageViewRightVip.setFitWidth(widthFit);
 
         reduceVip = new Button("", imageViewLeftVip);
-        TextField textVip = new TextField();
+        textVip = new TextField();
         textVip.setAlignment(Pos.CENTER);
         textVip.setMaxWidth(72);
         increaseVip = new Button("", imageViewRightVip);
 
-        TextField fromVip = new TextField();
-        TextField toVip = new TextField();
+        textVip.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    textVip.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+
+        fromVip = new TextField();
+        toVip = new TextField();
+        fromVip.setAlignment(Pos.CENTER);
+        toVip.setAlignment(Pos.CENTER);
         fromVip.setMaxWidth(54);
         toVip.setMaxWidth(54);
+
+        fromVip.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    fromVip.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+
+        toVip.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    toVip.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
 
         HBox vipItem = new HBox();
         vipItem.getChildren().addAll(vipToAddLabel, vipCheckBox);
@@ -222,15 +327,15 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         frustrationFactor = 1;
         fT = FrustrationTypes.LINEAR;
         percentageVip = 10; // n%
-        numberOfFloors = 5;
-        numberOfRidersToAdd = 10;
-        ridersHomed = new int[numberOfFloors];
+        numberOfFloors = 3;
+        numberOfRidersToAdd = 5;
+        ridersHomed = new int[3];
 
         ridersHomed[0] = 0;
         ridersHomed[1] = 100;
         ridersHomed[2] = 65;
-        ridersHomed[3] = 75;
-        ridersHomed[4] = 90;
+        //ridersHomed[3] = 75;
+        //ridersHomed[4] = 90;
 
         launch(args);
     }
@@ -238,8 +343,35 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         if (event.getSource() == startButton) {
+
+            if (numberOfFloorsCheckBox.isSelected()) {
+                int lowerFloor = Integer.parseInt(fromNumberOfFloors.getText());
+                int upperFloor = Integer.parseInt(toNumberOfFloors.getText());
+                numberOfFloors = ThreadLocalRandom.current().nextInt(lowerFloor, upperFloor + 1);
+            } else {
+                numberOfFloors = Integer.parseInt(textNumberOfFloors.getText());
+            }
+
+            if (ridersToAddCheckBox.isSelected()) {
+                int lowerRiders = Integer.parseInt(fromRidersToAdd.getText());
+                int upperRiders = Integer.parseInt(toRidersToAdd.getText());
+                numberOfRidersToAdd = ThreadLocalRandom.current().nextInt(lowerRiders, upperRiders + 1);
+            } else {
+                numberOfRidersToAdd = Integer.parseInt(textRidersToAdd.getText());
+            }
+
+            if (vipCheckBox.isSelected()) {
+                int lowerVip = Integer.parseInt(fromVip.getText());
+                int upperVip = Integer.parseInt(toVip.getText());
+                percentageVip = ThreadLocalRandom.current().nextInt(lowerVip, upperVip + 1);
+            } else {
+                percentageVip = Integer.parseInt(textVip.getText());
+            }
+
+            System.out.println("Double check: #Riders - " + numberOfRidersToAdd + ". #Floors - " + numberOfFloors + ". %Vip - " + percentageVip);
             elevatorDriver.Simulate(numberOfFloors, numberOfRidersToAdd, frustrationFactor, fT, percentageVip, ridersHomed);
-            System.out.println(elevatorDriver.getSimulationAM().get(2));
+//            System.out.println(elevatorDriver.getSimulationAM().get(2));
         }
     }
+
 }
