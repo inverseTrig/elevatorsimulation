@@ -51,8 +51,10 @@ public class ElevatorDriver {
 
         // Setup riders homed for each floor
         for (int i = 1; i < building.length; i++) {
+            System.out.println("Current floor: " + (i + 1) + ". Adding: " + ridersHomed[i] + " people.");
             addRiders(ridersHomed[i], i + 1, riders);
         }
+        System.out.println("Total riders: " + riders.size());
 
         Collections.shuffle(riders);
 
@@ -79,7 +81,9 @@ public class ElevatorDriver {
             if (currentRider < riders.size()) {
                 //n new riders
                 for (int index = 0; index < numberOfRidersToAdd; index++) {
-                    building[0].add(riders.get(currentRider++));
+                    if (currentRider < riders.size()) {
+                        building[0].add(riders.get(currentRider++));
+                    }
                 }
             }
 
@@ -142,9 +146,11 @@ public class ElevatorDriver {
             if (currentRider < riders.size()) {
                 //10 new riders
                 for (int index = 0; index < numberOfRidersToAdd; index++) {
-                    building[riders.get(currentRider).getHomeFloor() - 1].add(riders.get(currentRider));
-                    riders.get(currentRider).setHomeFloor(1);
-                    currentRider++;
+                    if (currentRider < riders.size()) {
+                        building[riders.get(currentRider).getHomeFloor() - 1].add(riders.get(currentRider));
+                        riders.get(currentRider).setHomeFloor(1);
+                        currentRider++;
+                    }
                 }
             }
 
@@ -155,11 +161,10 @@ public class ElevatorDriver {
 
             //Frustrate
             elevator.frustrate(frustrationFactor, fT); // Need to change to user input
-
-            //Push riders from current floor to elevator
-            while (elevator.getCurrentFloor() != 1 && !elevator.isFull() && !building[elevator.getCurrentFloor() - 1].isEmpty())
+            System.out.println(elevator.getCurrentFloor());
+            while (elevator.getCurrentFloor() != 1 && !elevator.isFull() && elevator.getCurrentFloor() -1 < numberOfFloors && !building[elevator.getCurrentFloor() - 1].isEmpty()) {
                 elevator.push(building[elevator.getCurrentFloor() - 1].remove());
-
+            }
             //Move elevator
             Random gen = new Random();
             if (elevator.peek() != null)
