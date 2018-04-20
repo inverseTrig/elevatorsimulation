@@ -2,6 +2,7 @@ package simulator;
 
 import elevator.*;
 import javafx.animation.PathTransition;
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,6 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
@@ -526,21 +528,31 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             double ypos [] = new double[elevatorDriver.getSimulationAM().size()];
             int floors  [] = new int [elevatorDriver.getSimulationAM().size()];
 
-            Random rand = new Random();
+            //Random rand = new Random();
 
             for(int i =0 ; i <elevatorDriver.getSimulationAM().size();i++){
-                floors [i] = rand.nextInt(7); //supposed to get simulatorAm Elevator Floors
-                ypos [i] = floors [i] * -5;  //Heights
-                //System.out.println(floors[i] + "-----------------Floors ----------------" + i);
+                floors [i] = elevatorDriver.getSimulationAM().get(i).getCurrentFloor(); //Gets simulatorAm Elevator Floors
+                ypos [i] = (floors [i] * 10)  + 200;  //Heights Therefore floor numer is -200/ 10
+
 
             }
             moveAnimation(root,ypos,floors);
         }
     }
 
+    /**
+     * Move methods creates a visible elevator in the shape of a rectangle.
+     * This along with a text shows the elevator. It is linked with posy[]
+     * an array of doubles, that has taken the Elevator floors from the
+     * ElevatorDriver class. It's numbers have been modified to correspond with
+     * floor levels to fit the y-coordinate system of the pane.
+     * @param root
+     * @param posY
+     * @param floor
+     */
     public static void moveAnimation(Pane root , double posY [], int floor [] ){
-        System.out.println("----------------------Running Move ----------------");
 
+        //Deletes the initial Rectangualr Image
         root.getChildren().clear();
 
         //These elevator
@@ -558,14 +570,11 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
 
 
-
-
         root.getChildren().addAll(rec,elevatorLabel);
         //Fix this
         for(int i = 0 ;i<floor.length;i++){
             floorLabel.setText("Floor : " + floor[i]);
         }
-
         rec.setArcHeight(30);
         rec.setArcHeight(30);
         rec.setFill(Color.VIOLET);
@@ -576,7 +585,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         //Only For Testing Purposes
         PathTransition move   = new PathTransition();  //moves elevator
         PathTransition move2  = new PathTransition(); //moves elevator
-
+        PauseTransition p = new PauseTransition();
 
         Path path  = new Path();
         Path path2 = new Path();
@@ -593,7 +602,6 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
         //Sets the position to vertical line
         for(int i=0; i<verLine.length;i++){
-            System.out.println(posY[i]);
             verLine[i].setY(posY[i]);
         }
 
@@ -602,28 +610,30 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         path2.getElements().add(new MoveTo(70,260));
 
         //Moves Elevator
-        for(int i =0; i<verLine.length;i++){
+        for(int i =0; i<verLine.length;i++) {
             path.getElements().add(verLine[i]);
         }
 
+
         for(int i =0; i<verLine.length;i++){
             path2.getElements().add(verLine[i]);
+
         }
 
 
         //Sets path to elevator object
         move.setNode(rec);
-        move.setDuration(Duration.seconds(100));
+        move.setDuration(Duration.seconds(90));
 
 
         move.setPath(path);
 
 
         move2.setNode(elevatorLabel);
-        move2.setDuration(Duration.seconds(100));
+        move2.setDuration(Duration.seconds(90));
         move2.setPath(path2);
 
-
+        //Plays the elevator
         move.play();
         move2.play();
 
