@@ -18,11 +18,17 @@ public class Elevator {
     private int riders = 0;
     private int currentFloor = 1;
 
+
     public boolean isFull() {
         if (riders == stack.length)
             return true;
         return false;
     }
+
+    public int getRiders(){
+        return riders;
+    }
+
 
     public int getCurrentFloor() {
         return currentFloor;

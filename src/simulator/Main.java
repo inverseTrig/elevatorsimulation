@@ -1,10 +1,16 @@
 package simulator;
 
 import elevator.*;
+import javafx.animation.Animation;
+import javafx.animation.ParallelTransition;
+import javafx.animation.PathTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -17,12 +23,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.*;
+import javafx.scene.text.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Main extends Application implements EventHandler<ActionEvent> {
@@ -30,7 +37,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     static int frustrationFactor, percentageVip, numberOfFloors, numberOfRidersToAdd;
     static FrustrationTypes fT;
     static int[] ridersHomed;
-    static ElevatorDriver elevatorDriver;
+    public static ElevatorDriver elevatorDriver = new ElevatorDriver();
+
 
     Separator separator = new Separator();
 
@@ -57,11 +65,15 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     final Text rangeRiders = new Text(" ~ ");
     final Text rangeVip = new Text(" ~ ");
     final Text rangeHomed = new Text(" ~ ");
+    static Pane root;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Elevator Simulator");
+
+        //I use this pane to add my animations to
+        root = new Pane();
 
         range.setWrappingWidth(36);
         range.setTextAlignment(TextAlignment.CENTER);
@@ -345,6 +357,34 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         vipRandomize.getChildren().addAll(fromVip, rangeVip, toVip);
         VBox vipBox = new VBox(vipItem, vipDisplay, vipRandomize);
 
+        /**************************************************************
+         * Animation Part
+         *************************************************************/
+        final Rectangle rec = new Rectangle(50,250,100,100);
+        final Text elevatorLabel = new Text(75,260,"Elevator");
+
+        int currentFloor  =  1;  //Get inital floor
+        int currentRiders =  1; //Get Riders
+        int currentVIP    =  1;   //Get Vip
+
+        Text floorLabel  = new Text(75,275,"Floor : " + currentFloor);
+        Text numOfRiders = new Text(75,300,"Riders : " + currentRiders);
+        Text numOfVip    = new Text(75,315,"Vips : " + currentVIP);
+
+
+
+        elevatorLabel.setBoundsType(TextBoundsType.VISUAL);
+        floorLabel.setBoundsType(TextBoundsType.VISUAL);
+
+
+        root.getChildren().addAll(rec,elevatorLabel,floorLabel,numOfRiders,numOfVip);
+
+        rec.setArcHeight(30);
+        rec.setArcHeight(30);
+        rec.setFill(Color.VIOLET);
+
+        root.setLayoutX(50);
+        root.setLayoutY(250);
 
         /**************************************************************
          FRUSTRATION BOX
@@ -393,6 +433,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
         HBox heechansPart = new HBox();
         heechansPart.getChildren().addAll(toolBar, ridersHomedBox);
+        heechansPart.getChildren().add(root);
 
         Scene scene = new Scene(heechansPart);
 
@@ -423,17 +464,21 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
+
         if (event.getSource() == startButton) {
+
 
             if (numberOfFloorsCheckBox.isSelected()) {
                 int lowerFloor = Integer.parseInt(fromNumberOfFloors.getText());
                 int upperFloor = Integer.parseInt(toNumberOfFloors.getText());
                 numberOfFloors = ThreadLocalRandom.current().nextInt(lowerFloor, upperFloor + 1);
+
             } else {
                 numberOfFloors = Integer.parseInt(textNumberOfFloors.getText());
             }
 
             ridersHomed = new int[numberOfFloors];
+
 
             if (ridersToAddCheckBox.isSelected()) {
                 int lowerRiders = Integer.parseInt(fromRidersToAdd.getText());
@@ -482,10 +527,133 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                     break;
             }
             System.out.println(ridersHomed[1] + " " + ridersHomed[2]);
-            System.out.println("Double check: #Riders - " + numberOfRidersToAdd + ". #Floors - " + numberOfFloors + ". %Vip - " + percentageVip);
+
             elevatorDriver.Simulate(numberOfFloors, numberOfRidersToAdd, frustrationFactor, fT, percentageVip, ridersHomed);
-//            System.out.println(elevatorDriver.getSimulationAM().get(2));
+
+           double ypos [] = new double[elevatorDriver.getSimulationAM().size()];
+           int floors  [] = new int [elevatorDriver.getSimulationAM().size()];
+
+            Random rand = new Random();
+
+           for(int i =0 ; i <elevatorDriver.getSimulationAM().size();i++){
+               floors [i] = rand.nextInt(7); //supposed to get simulatorAm Elevator Floors
+               ypos [i] = floors [i] * -5;  //Heights
+               //System.out.println(floors[i] + "-----------------Floors ----------------" + i);
+
+           }
+           moveAnimation(root,ypos,floors);
         }
+
+
+
+    }
+
+        public static void moveAnimation(Pane root , double posY [], int floor [] ){
+        System.out.println("----------------------Running Move ----------------");
+
+        root.getChildren().clear();
+
+        //These elevator
+        final Rectangle rec = new Rectangle(50,250,100,100);
+        final Text elevatorLabel = new Text(75,260,"Elevator");
+
+        //Setters
+
+
+        int currentFloor  = 1;// elevatorDriver.getElevator().getCurrentFloor();  //Get inital floor
+        int currentRiders =  floor[1];//elevatorDriver.getElevator().getRidersNum();
+        int currentVIP    =  1;   //Get Vip
+
+
+
+
+        Text floorLabel  = new Text(75,275,"Floor : " + currentFloor);
+
+
+
+        Text numOfRiders = new Text(75,300,"Riders : " + currentRiders);
+        Text numOfVip    = new Text(75,315,"Vips : " + currentVIP);
+
+
+        elevatorLabel.setBoundsType(TextBoundsType.VISUAL);
+        floorLabel.setBoundsType(TextBoundsType.VISUAL);
+
+
+
+
+
+        root.getChildren().addAll(rec,elevatorLabel,floorLabel,numOfRiders,numOfVip);
+        //Fix this
+        for(int i = 0 ;i<floor.length;i++){
+            floorLabel.setText("Floor : " + floor[i]);
+        }
+
+        rec.setArcHeight(30);
+        rec.setArcHeight(30);
+        rec.setFill(Color.VIOLET);
+
+        root.setLayoutX(50);
+        root.setLayoutY(250);
+
+        //Only For Testing Purposes
+        PathTransition move   = new PathTransition();  //moves elevator
+        PathTransition move2  = new PathTransition(); //moves elevator
+        //PathTransition move3  = new PathTransition();  //moves elevator
+        //PathTransition move4  = new PathTransition(); //moves elevator
+        PathTransition move5  = new PathTransition();//moves elevator
+
+        Path path  = new Path();
+        Path path2 = new Path();
+
+        //Creates Vertial line movement
+        VLineTo verLine [] = new VLineTo[posY.length];
+
+        //Fills Refs with objects
+        for(int i = 0; i<posY.length;i++){
+
+            verLine[i] = new VLineTo();
+        }
+
+
+        //Sets the position to vertical line
+        for(int i=0; i<verLine.length;i++){
+            System.out.println(posY[i]);
+            verLine[i].setY(posY[i]);
+        }
+
+        //Move to is initial positions
+        path.getElements().add(new MoveTo(70,250));
+        path2.getElements().add(new MoveTo(70,260));
+
+        //Moves Elevator
+        for(int i =0; i<verLine.length;i++){
+            path.getElements().add(verLine[i]);
+        }
+
+        for(int i =0; i<verLine.length;i++){
+            path2.getElements().add(verLine[i]);
+        }
+
+        //Sets path to elevator object
+        move.setNode(rec);
+        move.setDuration(Duration.minutes(2));
+        move.setPath(path);
+
+
+        move2.setNode(elevatorLabel);
+        move2.setDuration(Duration.minutes(2));
+        move2.setPath(path2);
+
+
+
+
+         move.play();
+         move2.play();
+        //move3.play();
+        //move4.play();
+        //move5.play();
+
+        //return root;
     }
 
 }

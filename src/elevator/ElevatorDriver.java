@@ -20,6 +20,7 @@ public class ElevatorDriver {
     private PriorityQueue<ElevatorRider>[] building;
 
 
+
     public ElevatorDriver() {
         simulationAM = new ArrayList<Elevator>();
         simulationPM = new ArrayList<Elevator>();
@@ -52,6 +53,7 @@ public class ElevatorDriver {
         // Setup riders homed for each floor
         for (int i = 1; i < building.length; i++) {
             addRiders(ridersHomed[i], i + 1, riders);
+
         }
 
         Collections.shuffle(riders);
@@ -74,6 +76,7 @@ public class ElevatorDriver {
 
         //Morning Mode
         int currentRider = 0;
+        int count = 0;
         do {
             //New rider!
             if (currentRider < riders.size()) {
@@ -88,17 +91,18 @@ public class ElevatorDriver {
             //Pop riders for elevator's current floor
             while (elevator.peek() != null && elevator.peek().getHomeFloor() == elevator.getCurrentFloor()) {
                 building[elevator.getCurrentFloor() - 1].add(elevator.pop());
+
             }
 
             //Frustrate
             elevator.frustrate(frustrationFactor, fT); // Need to change to user input
 
-
             //Push riders from current floor to elevator
             while (elevator.getCurrentFloor() == 1 && !elevator.isFull() && !building[elevator.getCurrentFloor() - 1].isEmpty())
                 elevator.push(building[elevator.getCurrentFloor() - 1].remove());
 
-            //System.out.println("ELEVATOR BEFORE MOVE: " + elevator);
+
+
 
             //Move elevator
             if (elevator.peek() != null) {
@@ -107,10 +111,14 @@ public class ElevatorDriver {
                 elevator.setCurrentFloor(1);
             }
 
-//            System.out.println("ELEVATOR AT END: " + elevator);
+            //System.out.println("ELEVATOR AT END: " + elevator);
             simulationAM.add(elevator);
+            System.out.println(simulationAM.get(count).getCurrentFloor() + " -------------------------Size--------------------- = " + simulationAM.size());
+            count ++;
         }
         while (currentRider < riders.size() || elevator.peek() != null || building[0].peek() != null);
+
+
 
         //Output
         int result = 0;
@@ -169,7 +177,7 @@ public class ElevatorDriver {
             else
                 elevator.setCurrentFloor(gen.nextInt(numberOfFloors-1) + 2);
 
-//            System.out.println("ELEVATOR AT END: " + elevator);
+            System.out.println("ELEVATOR AT END: " + elevator);
             simulationPM.add(elevator);
         }
         while (currentRider < riders.size() || elevator.peek() != null || buildingPeekFloors(building));
@@ -190,6 +198,7 @@ public class ElevatorDriver {
         System.out.println("PM MODE:\n\tAverage (MEAN) Total Frustration Level is: " + ((double) result / riders.size()));
         System.out.println("PM MODE:\n\tAverage (MEAN) VIP Frustration Level is: " + ((double) resultVIP / (riders.size() / 10)));
         System.out.println("PM MODE:\n\tAverage (MEAN) Non-VIP Frustration Level is: " + ((double) resultNoVIP / (riders.size() * .9)));
+        System.out.println(simulationAM.size() + "<-------------------------IN Side Driver------------------------------->");
 
     }
 
@@ -207,5 +216,9 @@ public class ElevatorDriver {
         }
         return isOccupied;
     }
-
+    /*
+    public Elevator getElevator() {
+        return elevator;
+    }
+    */
 }
