@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d3b32928-64f7-46c3-a549-e1e74fe6f684" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ElevatorSimulation/elevator/Elevator$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ElevatorSimulation/elevator/Elevator$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ElevatorSimulation/elevator/Elevator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ElevatorSimulation/elevator/Elevator.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ElevatorSimulation/elevator/ElevatorDriver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ElevatorSimulation/elevator/ElevatorDriver.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ElevatorSimulation/simulator/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ElevatorSimulation/simulator/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/elevator/ElevatorDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/elevator/ElevatorDriver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simulator/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/simulator/Main.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,8 +20,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/simulator/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="433">
-              <caret line="486" column="108" selection-start-line="486" selection-start-column="108" selection-end-line="486" selection-end-column="108" />
+            <state relative-caret-position="653">
+              <caret line="482" column="13" lean-forward="true" selection-start-line="482" selection-start-column="13" selection-end-line="482" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -231,7 +228,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32948583" />
@@ -242,7 +238,7 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32948583" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2975558" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.2975558" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32948583" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
@@ -530,8 +526,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/simulator/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="433">
-          <caret line="486" column="108" selection-start-line="486" selection-start-column="108" selection-end-line="486" selection-end-column="108" />
+        <state relative-caret-position="653">
+          <caret line="482" column="13" lean-forward="true" selection-start-line="482" selection-start-column="13" selection-end-line="482" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

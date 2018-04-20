@@ -481,7 +481,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                     fT = FrustrationTypes.LINEAR;
                     break;
             }
-            
+
             System.out.println("Double check: #Riders - " + numberOfRidersToAdd + ". #Floors - " + numberOfFloors + ". %Vip - " + percentageVip);
             elevatorDriver.Simulate(numberOfFloors, numberOfRidersToAdd, frustrationFactor, fT, percentageVip, ridersHomed);
 //            System.out.println("Elevator Simulation AM Size: " + elevatorDriver.getSimulationAM().size());
