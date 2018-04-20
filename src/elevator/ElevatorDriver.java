@@ -37,9 +37,6 @@ public class ElevatorDriver {
         return building;
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public void Simulate(int numberOfFloors, int numberOfRidersToAdd, int frustrationFactor, FrustrationTypes fT, int percentageVip, int[] ridersHomed) {
 
         //Setup riders
@@ -126,9 +123,9 @@ public class ElevatorDriver {
             }
         }
 
-        System.out.println("AM MODE:\n\tAverage (MEAN) Frustration Level is: " + ((double) result / riders.size()));
-        System.out.println("AM MODE:\n\tAverage (MEAN) VIP Frustration Level is: " + ((double) resultVIP / (riders.size() / 10)));
-        System.out.println("AM MODE:\n\tAverage (MEAN) Non-VIP Frustration Level is: " + ((double) resultNoVIP / (riders.size() * .9)));
+        System.out.println("AM MODE: Average (MEAN) Frustration Level is: " + ((double) result / riders.size()));
+        System.out.println("AM MODE: Average (MEAN) VIP Frustration Level is: " + ((double) resultVIP / (riders.size() / 10)));
+        System.out.println("AM MODE: Average (MEAN) Non-VIP Frustration Level is: " + ((double) resultNoVIP / (riders.size() * .9)));
 
 
         //Evening Mode
@@ -171,7 +168,7 @@ public class ElevatorDriver {
                 elevator.setCurrentFloor(gen.nextInt(numberOfFloors-1) + 2);
 
 //            System.out.println("ELEVATOR AT END: " + elevator);
-            simulationPM.add(elevator);
+            simulationPM.add(elevator.clone());
         }
         while (currentRider < riders.size() || elevator.peek() != null || buildingPeekFloors(building));
 
@@ -188,9 +185,9 @@ public class ElevatorDriver {
             }
         }
 
-        System.out.println("PM MODE:\n\tAverage (MEAN) Total Frustration Level is: " + ((double) result / riders.size()));
-        System.out.println("PM MODE:\n\tAverage (MEAN) VIP Frustration Level is: " + ((double) resultVIP / (riders.size() / 10)));
-        System.out.println("PM MODE:\n\tAverage (MEAN) Non-VIP Frustration Level is: " + ((double) resultNoVIP / (riders.size() * .9)));
+        System.out.println("PM MODE: Average (MEAN) Total Frustration Level is: " + ((double) result / riders.size()));
+        System.out.println("PM MODE: Average (MEAN) VIP Frustration Level is: " + ((double) resultVIP / (riders.size() / 10)));
+        System.out.println("PM MODE: Average (MEAN) Non-VIP Frustration Level is: " + ((double) resultNoVIP / (riders.size() * .9)));
 
     }
 

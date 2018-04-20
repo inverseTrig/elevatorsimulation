@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="d3b32928-64f7-46c3-a549-e1e74fe6f684" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ElevatorSimulation/elevator/Elevator$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ElevatorSimulation/elevator/Elevator$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ElevatorSimulation/elevator/Elevator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ElevatorSimulation/elevator/Elevator.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ElevatorSimulation/elevator/ElevatorDriver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ElevatorSimulation/elevator/ElevatorDriver.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ElevatorSimulation/simulator/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ElevatorSimulation/simulator/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/elevator/Elevator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/elevator/Elevator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/elevator/ElevatorDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/elevator/ElevatorDriver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/simulator/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/simulator/Main.java" afterDir="false" />
     </list>
@@ -19,11 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/simulator/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="523">
-              <caret line="492" column="68" selection-start-line="492" selection-start-column="68" selection-end-line="492" selection-end-column="68" />
+            <state relative-caret-position="433">
+              <caret line="486" column="108" selection-start-line="486" selection-start-column="108" selection-end-line="486" selection-end-column="108" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -43,8 +44,8 @@
       <file leaf-file-name="ElevatorDriver.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/elevator/ElevatorDriver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="111" column="40" lean-forward="true" selection-start-line="111" selection-start-column="40" selection-end-line="111" selection-end-column="40" />
+            <state relative-caret-position="253">
+              <caret line="125" column="37" selection-start-line="125" selection-start-column="37" selection-end-line="125" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -52,16 +53,16 @@
       <file leaf-file-name="ElevatorRider.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/elevator/ElevatorRider.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
+            <state relative-caret-position="15">
               <caret line="17" column="19" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Elevator.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Elevator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/elevator/Elevator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
+            <state relative-caret-position="450">
               <caret line="30" column="43" lean-forward="true" selection-start-line="30" selection-start-column="43" selection-end-line="30" selection-end-column="43" />
             </state>
           </provider>
@@ -82,9 +83,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/simulator/Main.java" />
         <option value="$PROJECT_DIR$/src/elevator/Elevator.java" />
         <option value="$PROJECT_DIR$/src/elevator/ElevatorDriver.java" />
+        <option value="$PROJECT_DIR$/src/simulator/Main.java" />
       </list>
     </option>
   </component>
@@ -99,7 +100,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -128,8 +131,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -240,8 +241,8 @@
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="3" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2975558" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32948583" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2975558" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32948583" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
@@ -250,8 +251,8 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -264,6 +265,44 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/simulator/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7035">
+          <caret line="492" column="68" selection-start-line="492" selection-start-column="68" selection-end-line="492" selection-end-column="68" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/elevator/FrustrationTypes.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/elevator/ElevatorDriver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1665">
+          <caret line="111" column="40" lean-forward="true" selection-start-line="111" selection-start-column="40" selection-end-line="111" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/elevator/ElevatorRider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="19" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/elevator/Elevator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="43" lean-forward="true" selection-start-line="30" selection-start-column="43" selection-end-line="30" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/simulator/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7335">
@@ -461,13 +500,24 @@
     <entry file="jar:///opt/java/jdk-10/lib/src.zip!/javafx.base/com/sun/javafx/event/CompositeEventHandler.java" />
     <entry file="jar:///opt/java/jdk-10/lib/src.zip!/java.base/java/util/ArrayList.java" />
     <entry file="jar:///opt/java/jdk-10/lib/src.zip!/java.base/java/util/AbstractQueue.java" />
-    <entry file="file://$PROJECT_DIR$/src/simulator/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/elevator/Elevator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="492" column="68" selection-start-line="492" selection-start-column="68" selection-end-line="492" selection-end-column="68" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="450">
+          <caret line="30" column="43" lean-forward="true" selection-start-line="30" selection-start-column="43" selection-end-line="30" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/elevator/ElevatorRider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="17" column="19" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/elevator/ElevatorDriver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="125" column="37" selection-start-line="125" selection-start-column="37" selection-end-line="125" selection-end-column="37" />
         </state>
       </provider>
     </entry>
@@ -478,24 +528,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/elevator/ElevatorRider.java">
+    <entry file="file://$PROJECT_DIR$/src/simulator/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="19" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/elevator/ElevatorDriver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="111" column="40" lean-forward="true" selection-start-line="111" selection-start-column="40" selection-end-line="111" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/elevator/Elevator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="30" column="43" lean-forward="true" selection-start-line="30" selection-start-column="43" selection-end-line="30" selection-end-column="43" />
+        <state relative-caret-position="433">
+          <caret line="486" column="108" selection-start-line="486" selection-start-column="108" selection-end-line="486" selection-end-column="108" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

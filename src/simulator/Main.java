@@ -481,17 +481,10 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                     fT = FrustrationTypes.LINEAR;
                     break;
             }
-            System.out.println(ridersHomed[1] + " " + ridersHomed[2]);
+            
             System.out.println("Double check: #Riders - " + numberOfRidersToAdd + ". #Floors - " + numberOfFloors + ". %Vip - " + percentageVip);
             elevatorDriver.Simulate(numberOfFloors, numberOfRidersToAdd, frustrationFactor, fT, percentageVip, ridersHomed);
-            System.out.println("Elevator Simulation AM Size: " + elevatorDriver.getSimulationAM().size());
-            for (int i = 0; i < 50; i++) {
-                System.out.println("Floor info: " + elevatorDriver.getSimulationAM().get(i));
-            }
-
-            for (Elevator e: elevatorDriver.getSimulationAM()) {
-                System.out.println("\tFloor info: " + e.toString());
-            }
+//            System.out.println("Elevator Simulation AM Size: " + elevatorDriver.getSimulationAM().size());
 //            System.out.println(elevatorDriver.getSimulationAM().get(2));
         }
     }
