@@ -24,6 +24,14 @@ public class Elevator {
         return false;
     }
 
+    public Elevator clone() {
+        Elevator e = new Elevator();
+        e.stack = this.stack;
+        e.riders = this.riders;
+        e.currentFloor = this.currentFloor;
+        return e;
+    }
+
     public int getCurrentFloor() {
         return currentFloor;
     }

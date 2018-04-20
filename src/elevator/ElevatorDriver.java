@@ -98,7 +98,8 @@ public class ElevatorDriver {
             while (elevator.getCurrentFloor() == 1 && !elevator.isFull() && !building[elevator.getCurrentFloor() - 1].isEmpty())
                 elevator.push(building[elevator.getCurrentFloor() - 1].remove());
 
-            //System.out.println("ELEVATOR BEFORE MOVE: " + elevator);
+//            System.out.println("ELEVATOR BEFORE MOVE: " + elevator);
+            simulationAM.add(elevator.clone());
 
             //Move elevator
             if (elevator.peek() != null) {
@@ -108,7 +109,7 @@ public class ElevatorDriver {
             }
 
 //            System.out.println("ELEVATOR AT END: " + elevator);
-            simulationAM.add(elevator);
+            simulationAM.add(elevator.clone());
         }
         while (currentRider < riders.size() || elevator.peek() != null || building[0].peek() != null);
 
