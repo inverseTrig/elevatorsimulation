@@ -1,6 +1,8 @@
 package simulator;
 
 import elevator.*;
+import javafx.animation.PathTransition;
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,12 +19,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.VLineTo;
+import javafx.scene.text.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Main extends Application implements EventHandler<ActionEvent> {
@@ -57,11 +64,11 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     final Text rangeRiders = new Text(" ~ ");
     final Text rangeVip = new Text(" ~ ");
     final Text rangeHomed = new Text(" ~ ");
+    static Pane root;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Elevator Simulator");
+        root = new Pane();
 
         range.setWrappingWidth(36);
         range.setTextAlignment(TextAlignment.CENTER);
@@ -345,8 +352,38 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         vipRandomize.getChildren().addAll(fromVip, rangeVip, toVip);
         VBox vipBox = new VBox(vipItem, vipDisplay, vipRandomize);
 
-
         /**************************************************************
+         * Animation Part
+         *************************************************************/
+        final Rectangle rec = new Rectangle(50,250,100,100);
+
+        final Text elevatorLabel = new Text(75,260,"Elevator");
+
+        int currentFloor  =  1;  //Get inital floor
+        int currentRiders =  0; //Get Riders
+        int currentVIP    =  0;   //Get Vip
+
+        Text floorLabel  = new Text(75,275,"Floor : " + currentFloor);
+        Text numOfRiders = new Text(75,300,"Riders : " + currentRiders);
+        Text numOfVip    = new Text(75,315,"Vips : " + currentVIP);
+
+
+
+        elevatorLabel.setBoundsType(TextBoundsType.VISUAL);
+        floorLabel.setBoundsType(TextBoundsType.VISUAL);
+
+
+        root.getChildren().addAll(rec,elevatorLabel,floorLabel,numOfRiders,numOfVip);
+
+        rec.setArcHeight(30);
+        rec.setArcHeight(30);
+        rec.setFill(Color.VIOLET);
+
+        root.setLayoutX(50);
+        root.setLayoutY(250);
+
+
+        /*************************************************  *************
          FRUSTRATION BOX
          **************************************************************/
         Text frustrationLabel = new Text ("Frustration Type");
@@ -393,6 +430,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
         HBox heechansPart = new HBox();
         heechansPart.getChildren().addAll(toolBar, ridersHomedBox);
+        heechansPart.getChildren().add(root);
 
         Scene scene = new Scene(heechansPart);
 
@@ -486,7 +524,120 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             elevatorDriver.Simulate(numberOfFloors, numberOfRidersToAdd, frustrationFactor, fT, percentageVip, ridersHomed);
 //            System.out.println("Elevator Simulation AM Size: " + elevatorDriver.getSimulationAM().size());
 //            System.out.println(elevatorDriver.getSimulationAM().get(2));
+
+            double ypos [] = new double[elevatorDriver.getSimulationAM().size()];
+            int floors  [] = new int [elevatorDriver.getSimulationAM().size()];
+
+            //Random rand = new Random();
+
+            for(int i =0 ; i <elevatorDriver.getSimulationAM().size();i++){
+                floors [i] = elevatorDriver.getSimulationAM().get(i).getCurrentFloor(); //Gets simulatorAm Elevator Floors
+                ypos [i] = (floors [i] * 10)  + 200;  //Heights Therefore floor numer is -200/ 10
+
+
+            }
+            moveAnimation(root,ypos,floors);
         }
     }
+
+    /**
+     * Move methods creates a visible elevator in the shape of a rectangle.
+     * This along with a text shows the elevator. It is linked with posy[]
+     * an array of doubles, that has taken the Elevator floors from the
+     * ElevatorDriver class. It's numbers have been modified to correspond with
+     * floor levels to fit the y-coordinate system of the pane.
+     * @param root
+     * @param posY
+     * @param floor
+     */
+    public static void moveAnimation(Pane root , double posY [], int floor [] ){
+
+        //Deletes the initial Rectangualr Image
+        root.getChildren().clear();
+
+        //These elevator
+        final Rectangle rec = new Rectangle(50,250,100,100);
+        final Text elevatorLabel = new Text(75,260,"Elevator");
+
+        int currentFloor  = 1;// elevatorDriver.getElevator().getCurrentFloor();  //Get inital floor
+
+
+        Text floorLabel  = new Text(75,275,"Floor : " + currentFloor);
+
+
+        elevatorLabel.setBoundsType(TextBoundsType.VISUAL);
+        floorLabel.setBoundsType(TextBoundsType.VISUAL);
+
+
+
+        root.getChildren().addAll(rec,elevatorLabel);
+        //Fix this
+        for(int i = 0 ;i<floor.length;i++){
+            floorLabel.setText("Floor : " + floor[i]);
+        }
+        rec.setArcHeight(30);
+        rec.setArcHeight(30);
+        rec.setFill(Color.VIOLET);
+
+        root.setLayoutX(50);
+        root.setLayoutY(250);
+
+        //Only For Testing Purposes
+        PathTransition move   = new PathTransition();  //moves elevator
+        PathTransition move2  = new PathTransition(); //moves elevator
+        PauseTransition p = new PauseTransition();
+
+        Path path  = new Path();
+        Path path2 = new Path();
+
+        //Creates Vertial line movement
+        VLineTo verLine [] = new VLineTo[posY.length];
+
+        //Fills Refs with objects
+        for(int i = 0; i<posY.length;i++){
+
+            verLine[i] = new VLineTo();
+        }
+
+
+        //Sets the position to vertical line
+        for(int i=0; i<verLine.length;i++){
+            verLine[i].setY(posY[i]);
+        }
+
+        //Move to is initial positions
+        path.getElements().add(new MoveTo(70,250));
+        path2.getElements().add(new MoveTo(70,260));
+
+        //Moves Elevator
+        for(int i =0; i<verLine.length;i++) {
+            path.getElements().add(verLine[i]);
+        }
+
+
+        for(int i =0; i<verLine.length;i++){
+            path2.getElements().add(verLine[i]);
+
+        }
+
+
+        //Sets path to elevator object
+        move.setNode(rec);
+        move.setDuration(Duration.seconds(90));
+
+
+        move.setPath(path);
+
+
+        move2.setNode(elevatorLabel);
+        move2.setDuration(Duration.seconds(90));
+        move2.setPath(path2);
+
+        //Plays the elevator
+        move.play();
+        move2.play();
+
+    }
+
 
 }
