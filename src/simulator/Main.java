@@ -7,6 +7,7 @@ import javafx.animation.PathTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -14,6 +15,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -557,22 +559,10 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         final Rectangle rec = new Rectangle(50,250,100,100);
         final Text elevatorLabel = new Text(75,260,"Elevator");
 
-        //Setters
-
-
         int currentFloor  = 1;// elevatorDriver.getElevator().getCurrentFloor();  //Get inital floor
-        int currentRiders =  floor[1];//elevatorDriver.getElevator().getRidersNum();
-        int currentVIP    =  1;   //Get Vip
-
-
 
 
         Text floorLabel  = new Text(75,275,"Floor : " + currentFloor);
-
-
-
-        Text numOfRiders = new Text(75,300,"Riders : " + currentRiders);
-        Text numOfVip    = new Text(75,315,"Vips : " + currentVIP);
 
 
         elevatorLabel.setBoundsType(TextBoundsType.VISUAL);
@@ -582,7 +572,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
 
 
-        root.getChildren().addAll(rec,elevatorLabel,floorLabel,numOfRiders,numOfVip);
+        root.getChildren().addAll(rec,elevatorLabel);
         //Fix this
         for(int i = 0 ;i<floor.length;i++){
             floorLabel.setText("Floor : " + floor[i]);
@@ -598,9 +588,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         //Only For Testing Purposes
         PathTransition move   = new PathTransition();  //moves elevator
         PathTransition move2  = new PathTransition(); //moves elevator
-        //PathTransition move3  = new PathTransition();  //moves elevator
-        //PathTransition move4  = new PathTransition(); //moves elevator
-        PathTransition move5  = new PathTransition();//moves elevator
+
 
         Path path  = new Path();
         Path path2 = new Path();
@@ -634,26 +622,26 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             path2.getElements().add(verLine[i]);
         }
 
+
         //Sets path to elevator object
         move.setNode(rec);
-        move.setDuration(Duration.minutes(2));
+        move.setDuration(Duration.seconds(100));
+
+
         move.setPath(path);
 
 
         move2.setNode(elevatorLabel);
-        move2.setDuration(Duration.minutes(2));
+        move2.setDuration(Duration.seconds(100));
         move2.setPath(path2);
 
 
+        move.play();
+        move2.play();
 
-
-         move.play();
-         move2.play();
-        //move3.play();
-        //move4.play();
-        //move5.play();
-
-        //return root;
     }
+
+
+
 
 }
